@@ -18,40 +18,40 @@ import java.util.stream.Collectors;
  */
 public class Task6 implements Task {
 
-    private Set<String> getPersonDescriptions(Collection<Person> persons,
-                                              Map<Integer, Set<Integer>> personAreaIds,
-                                              Collection<Area> areas) {
+  private Set<String> getPersonDescriptions(Collection<Person> persons,
+                                            Map<Integer, Set<Integer>> personAreaIds,
+                                            Collection<Area> areas) {
 
 
-        Map<Integer, String> areasIdName = areas.stream().collect(Collectors.toMap(Area::getId, Area::getName));
+    Map<Integer, String> areasIdName = areas.stream().collect(Collectors.toMap(Area::getId, Area::getName));
 
-        Set<String> personDescriptions = new HashSet<>();
-        StringBuilder nameRegion = new StringBuilder();
+    Set<String> personDescriptions = new HashSet<>();
+    StringBuilder nameRegion = new StringBuilder();
 
-        for (Person person : persons) {
+    for (Person person : persons) {
 
-            for (Integer areaId : personAreaIds.get(person.getId())) {
-                nameRegion.append(person.getFirstName());
-                nameRegion.append(" - ");
-                nameRegion.append(areasIdName.get(areaId));
+      for (Integer areaId : personAreaIds.get(person.getId())) {
+        nameRegion.append(person.getFirstName());
+        nameRegion.append(" - ");
+        nameRegion.append(areasIdName.get(areaId));
 
-                personDescriptions.add(nameRegion.toString());
-                nameRegion.delete(0, nameRegion.length());
-            }
-        }
-
-        return personDescriptions;
+        personDescriptions.add(nameRegion.toString());
+        nameRegion.delete(0, nameRegion.length());
+      }
     }
 
-    @Override
-    public boolean check() {
-        List<Person> persons = List.of(
-                new Person(1, "Oleg", Instant.now()),
-                new Person(2, "Vasya", Instant.now())
-        );
-        Map<Integer, Set<Integer>> personAreaIds = Map.of(1, Set.of(1, 2), 2, Set.of(2, 3));
-        List<Area> areas = List.of(new Area(1, "Moscow"), new Area(2, "Spb"), new Area(3, "Ivanovo"));
-        return getPersonDescriptions(persons, personAreaIds, areas)
-                .equals(Set.of("Oleg - Moscow", "Oleg - Spb", "Vasya - Spb", "Vasya - Ivanovo"));
-    }
+    return personDescriptions;
+  }
+
+  @Override
+  public boolean check() {
+    List<Person> persons = List.of(
+        new Person(1, "Oleg", Instant.now()),
+        new Person(2, "Vasya", Instant.now())
+    );
+    Map<Integer, Set<Integer>> personAreaIds = Map.of(1, Set.of(1, 2), 2, Set.of(2, 3));
+    List<Area> areas = List.of(new Area(1, "Moscow"), new Area(2, "Spb"), new Area(3, "Ivanovo"));
+    return getPersonDescriptions(persons, personAreaIds, areas)
+        .equals(Set.of("Oleg - Moscow", "Oleg - Spb", "Vasya - Spb", "Vasya - Ivanovo"));
+  }
 }
