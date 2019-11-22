@@ -22,10 +22,12 @@ public class Task6 implements Task {
                                             Map<Integer, Set<Integer>> personAreaIds,
                                             Collection<Area> areas) {
 
-
+    //Промежуточная мапа areaId -> areaName
     Map<Integer, String> areasIdName = areas.stream().collect(Collectors.toMap(Area::getId, Area::getName));
 
+    //Результирующий Сет
     Set<String> personDescriptions = new HashSet<>();
+    //Стрингбилдер для работы со строками, вынес из цикла, чтобы каждый раз новый не создавался
     StringBuilder nameRegion = new StringBuilder();
 
     for (Person person : persons) {
@@ -36,6 +38,7 @@ public class Task6 implements Task {
         nameRegion.append(areasIdName.get(areaId));
 
         personDescriptions.add(nameRegion.toString());
+        //Очищаю стрингбилдер для использования в последующией итерации
         nameRegion.delete(0, nameRegion.length());
       }
     }
