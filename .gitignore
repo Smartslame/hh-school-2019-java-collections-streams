@@ -2,3 +2,4 @@
 out/
 .directory
 *.iml
+.DS_Store
