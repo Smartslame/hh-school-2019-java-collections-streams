@@ -37,24 +37,12 @@ public class Task8 implements Task {
   }
 
   //Для фронтов выдадим полное имя, а то сами не могут
-  //Перейдем на StringBuilder, должно работать быстрее + не будет создавать промежуточных строк.
+  //Перешел на версию со стримом.
   //По-хорошему можно было бы toString у персоны переопределить
   public String convertPersonToString(Person person) {
-    StringBuilder result = new StringBuilder();
-    if (person.getSecondName() != null) {
-      result.append(person.getSecondName());
-    }
-
-    if (person.getFirstName() != null) {
-      result.append(" ");
-      result.append(person.getFirstName());
-    }
-
-    if (person.getSecondName() != null) {
-      result.append(" ");
-      result.append(person.getSecondName());
-    }
-    return result.toString();
+    return Stream.of(person.getSecondName(), person.getFirstName(), person.getMiddleName())
+        .filter(Objects::nonNull)
+        .collect(Collectors.joining(" "));
   }
 
   // словарь id персоны -> ее имя
@@ -69,13 +57,7 @@ public class Task8 implements Task {
   public boolean hasSamePersons(Collection<Person> persons1, Collection<Person> persons2) {
     Set<Person> firstPersonSet = new HashSet<>(persons1);
 
-    for (Person person : persons2) {
-      if (firstPersonSet.contains(person)) {
-        return true;
-      }
-    }
-
-    return false;
+    return persons2.stream().anyMatch(firstPersonSet::contains);
   }
 
   //Выглядит вроде неплохо...
