@@ -47,8 +47,10 @@ public class Task8 implements Task {
 
   // словарь id персоны -> ее имя
   // Уменьшил количество кода, увеличил читаемость и понятность
+  //При дубле ключа будем оставлять последнее значение, чтобы не словить duplicateKeyException.
   public Map<Integer, String> getPersonNames(Collection<Person> persons) {
-    return persons.stream().collect(Collectors.toMap(Person::getId, this::convertPersonToString));
+    return persons.stream()
+        .collect(Collectors.toMap(Person::getId, this::convertPersonToString, (oldName, newName) -> newName));
   }
 
   // есть ли совпадающие в двух коллекциях персоны?
