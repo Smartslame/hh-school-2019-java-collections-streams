@@ -22,7 +22,7 @@ public class Task8 implements Task {
 
 
   //Не хотим выдывать апи нашу фальшивую персону, поэтому конвертим начиная со второй
-  //Не будем удалять персону, а просто пропустим ее. Она ведь может потом пригодится + обернул все в стрим
+  //Не будем удалять персону, а просто пропустим ее. Она ведь может потом пригодиться + обернул все в стрим
   public List<String> getNames(List<Person> persons) {
     return persons.stream()
         .skip(1)
@@ -58,7 +58,7 @@ public class Task8 implements Task {
   }
 
   // словарь id персоны -> ее имя
-  // Уменьшил количество кода, увеличили читаемость и понятность
+  // Уменьшил количество кода, увеличил читаемость и понятность
   public Map<Integer, String> getPersonNames(Collection<Person> persons) {
     return persons.stream().collect(Collectors.toMap(Person::getId, this::convertPersonToString));
   }
@@ -79,7 +79,7 @@ public class Task8 implements Task {
   }
 
   //Выглядит вроде неплохо...
-  // Не за чем хранить переменную count, стрим умеет считать количество элементов
+  //Незачем хранить переменную count, стрим умеет считать количество элементов
   public long countEven(Stream<Integer> numbers) {
     return numbers.filter(num -> num % 2 == 0).count();
   }
