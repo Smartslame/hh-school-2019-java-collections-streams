@@ -27,20 +27,14 @@ public class Task6 implements Task {
 
     //Результирующий Сет
     Set<String> personDescriptions = new HashSet<>();
-    //Стрингбилдер для работы со строками, вынес из цикла, чтобы каждый раз новый не создавался
-    StringBuilder nameRegion = new StringBuilder();
 
     for (Person person : persons) {
 
-      for (Integer areaId : personAreaIds.get(person.getId())) {
-        nameRegion.append(person.getFirstName());
-        nameRegion.append(" - ");
-        nameRegion.append(areasIdName.get(areaId));
-
-        personDescriptions.add(nameRegion.toString());
-        //Очищаю стрингбилдер для использования в последующией итерации
-        nameRegion.delete(0, nameRegion.length());
-      }
+      personAreaIds.get(person.getId())
+          .stream()
+          .map(areasIdName::get) //Стрим из строк areaName
+          .map(areaName -> String.format("%s - %s", person.getFirstName(), areaName)) //получаем стрим нужных строк
+          .forEach(personDescriptions::add);
     }
 
     return personDescriptions;
